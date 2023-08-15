@@ -13,6 +13,7 @@ This project aims to build a highly effective spam filter using machine learning
 
 Unwanted spam emails can be a huge annoyance, cluttering up our inboxes and wasting valuable time. This project tackles this problem by leveraging machine learning and natural language processing to classify emails as spam or legitimate messages.
 
+Data source: https://spamassassin.apache.org/old/publiccorpus/
 ## Features
 
 - **Data Preprocessing**: Raw email text is transformed into structured features, replacing URLs, numbers, and emails with placeholders. The project involves heavy data cleaning.

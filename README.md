@@ -36,5 +36,4 @@ The spam filter has demonstrated outstanding performance:
 
 An example of a spam email is shown below.
 
-![Example Image](https://github.com/AliElneklawy/spam-filter/blob/main/test.png)
 

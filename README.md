@@ -8,6 +8,7 @@ This project aims to build a highly effective spam filter using machine learning
 - [Introduction](#introduction)
 - [Features](#features)
 - [Results](#results)
+- [Example](#example)
 
 ## Introduction
 
@@ -30,4 +31,10 @@ The spam filter has demonstrated outstanding performance:
 - Recall: 97.5%
 - ROC Score: 98.35%
 - F1 Score: 97.6%
+
+## Example
+
+An example of a spam email is shown below.
+
+![Example Image](https://github.com/AliElneklawy/spam-filter/blob/main/test.png)
 

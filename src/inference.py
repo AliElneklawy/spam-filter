@@ -11,6 +11,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 from paths import MODEL_PATH
 
+
 with open(MODEL_PATH, "rb") as f:
     loaded_model = dill.load(f)
 

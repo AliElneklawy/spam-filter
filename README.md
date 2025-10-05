@@ -1,5 +1,28 @@
-# Advanced Spam Filter Project
+# Advanced Spam Filter
+<div id="top">
 
+<!-- HEADER STYLE: CLASSIC -->
+<div align="center">
+
+<em></em>
+
+<!-- BADGES -->
+<!-- local repository, no metadata badges. -->
+
+<em>Built with the tools and technologies:</em>
+
+<img src="https://img.shields.io/badge/TOML-9C4121.svg?style=default&logo=TOML&logoColor=white" alt="TOML">
+<img src="https://img.shields.io/badge/scikitlearn-F7931E.svg?style=default&logo=scikit-learn&logoColor=white" alt="scikitlearn">
+<img src="https://img.shields.io/badge/FastAPI-009688.svg?style=default&logo=FastAPI&logoColor=white" alt="FastAPI">
+<img src="https://img.shields.io/badge/Docker-2496ED.svg?style=default&logo=Docker&logoColor=white" alt="Docker">
+<img src="https://img.shields.io/badge/Python-3776AB.svg?style=default&logo=Python&logoColor=white" alt="Python">
+<img src="https://img.shields.io/badge/SciPy-8CAAE6.svg?style=default&logo=SciPy&logoColor=white" alt="SciPy">
+<img src="https://img.shields.io/badge/uv-DE5FE9.svg?style=default&logo=uv&logoColor=white" alt="uv">
+
+</div>
+<br>
+
+---
 This project builds a highly effective spam filter using machine learning techniques. It includes both a web application and a Telegram bot for spam classification.
 
 ## Table of Contents

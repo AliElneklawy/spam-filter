@@ -11,16 +11,16 @@ from sklearn.base import BaseEstimator, TransformerMixin
 
 from paths import MODEL_PATH
 
-
-with open(MODEL_PATH, "rb") as f:
-    loaded_model = dill.load(f)
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords", quiet=True)
 
 
 def html_to_plain(mail):
     soup = BeautifulSoup(mail.get_payload(), "html.parser")
     plain = soup.text.replace("=\n", "")
     plain = re.sub(r"\s+", " ", plain)
-
     return plain.strip()
 
 
@@ -34,7 +34,6 @@ def mail_to_plain(mail):
             txt_cont += part.get_payload()
         else:
             txt_cont += html_to_plain(part)
-
     return txt_cont
 
 
@@ -108,14 +107,38 @@ class WordCountVectorizerTransformer(BaseEstimator, TransformerMixin):
         )
 
 
-user_input = input("Enter email: ")
-input_email = email.message.Message()
-input_email.set_payload(user_input)
+import builtins
 
-proba = round(loaded_model.predict_proba([input_email])[0][1] * 100, 2)
-pred = loaded_model.predict([input_email])
+builtins.nltk = nltk
+builtins.urlextract = urlextract
+builtins.re = re
+builtins.Counter = Counter
+builtins.BeautifulSoup = BeautifulSoup
+builtins.csr_matrix = csr_matrix
+builtins.mail_to_plain = mail_to_plain
+builtins.html_to_plain = html_to_plain
+builtins.WordCounterTransformer = WordCounterTransformer
+builtins.WordCountVectorizerTransformer = WordCountVectorizerTransformer
 
 
-print()
-print(f"There is a {proba}% chance that the email is spam.")
-print("My guess: Spam") if pred == 1 else print("My guess: Not Spam")
+with open(MODEL_PATH, "rb") as f:
+    loaded_model = dill.load(f)
+
+
+def predict(user_input):
+    input_email = email.message.Message()
+    input_email.set_payload(user_input)
+
+    proba = round(loaded_model.predict_proba([input_email])[0][1] * 100, 2)
+    pred = loaded_model.predict([input_email])
+
+    return proba, pred
+
+
+if __name__ == "__main__":
+    user_input = input("Enter email: ")
+    proba, pred = predict(user_input)
+
+    print()
+    print(f"There is a {proba}% chance that the email is spam.")
+    print("My guess: Spam") if pred == 1 else print("My guess: Not Spam")

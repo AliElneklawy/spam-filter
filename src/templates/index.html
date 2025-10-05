@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .spam {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+        .ham {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        .loading {
+            text-align: center;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Email Classifier</h1>
+        <p>Paste the content of an email below to check if it's spam or ham (not spam):</p>
+        <textarea id="emailContent" placeholder="Paste email content here..."></textarea>
+        <button onclick="classifyEmail()">Check Email</button>
+        
+        <div class="loading" id="loading">
+            <p>Analyzing email...</p>
+        </div>
+        
+        <div id="result" class="result">
+            <h3>Result: <span id="resultText"></span></h3>
+            <p>Confidence: <span id="confidence"></span></p>
+        </div>
+    </div>
+
+    <script>
+        async function classifyEmail() {
+            const emailContent = document.getElementById('emailContent').value.trim();
+            if (!emailContent) {
+                alert('Please enter some email content to analyze.');
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+            const confidenceSpan = document.getElementById('confidence');
+
+            // Show loading, hide previous results
+            loading.style.display = 'block';
+            resultDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/classify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: emailContent })
+                });
+
+                const data = await response.json();
+                
+                // Display results
+                resultDiv.className = 'result ' + (data.is_spam ? 'spam' : 'ham');
+                resultText.textContent = data.is_spam ? 'SPAM' : 'HAM (Not Spam)';
+                confidenceSpan.textContent = (data.probability * 100).toFixed(2) + '%';
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing your request.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
